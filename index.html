@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hatırladığım Sen</title>
+  <!-- Firebase v8 SDK -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
   <style>
     body {
       margin: 0;
@@ -119,11 +122,26 @@
       background-color: #3498db;
       color: white;
     }
+    #page7 .write-button {
+      background-color: #2ecc71;
+      color: white;
+    }
     #page7 .game-message {
       margin-top: 20px;
       font-style: italic;
       color: #2c3e50;
       z-index: 1;
+    }
+    #page8 textarea {
+      width: 100%;
+      max-width: 500px;
+      height: 150px;
+      margin: 20px 0;
+      padding: 10px;
+      font-size: 1em;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      resize: vertical;
     }
     audio {
       display: none;
@@ -171,7 +189,7 @@
     <audio id="audio2" src="song2.mp3" preload="auto"></audio>
     <div class="content">
         <img class="gif" 
-     src="https://media2.giphy.com/media/v1.Y2lkPTc9MGI3NjExdWF4M2xvbjhvdnY5Ynk4Y3k2NWpkOWNlNTU0Y3hzZ245cmI3YXBnaiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3ohhwfAa9rbXaZe86c/giphy.gif" 
+     src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExdWF4M2xvbjhvdnY5Ynk4Y3k2NWpkOWNlNTU0Y3hzZ245cmI3YXBnaiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3ohhwfAa9rbXaZe86c/giphy.gif" 
      alt="Dans Eden GIF"
      style="width: 80px; height: 80px;">
       <h1>Mezuniyet Çiçeğin</h1>
@@ -248,6 +266,7 @@
       <div class="buttons">
         <button id="redButton" class="red-button">Kırmızı</button>
         <button id="blueButton" class="blue-button">Mavi</button>
+        <button id="writeButton" class="write-button" onclick="showPage('page8')">Yazı Yaz</button>
       </div>
       <p id="gameMessage" class="game-message"></p>
       <div class="buttons">
@@ -256,17 +275,51 @@
     </div>
   </div>
 
+  <div id="page8" class="page">
+    <audio id="audio8" src="song8.mp3" preload="auto"></audio>
+    <div class="content">
+      <h1>Bir Mesaj Bırak</h1>
+      <p>Burada içinden gelenleri yazabilirsin. Ne düşünüyorsun, ne hissettin?</p>
+      <textarea id="messageInput" placeholder="Mesajınızı buraya yazın..."></textarea>
+      <div class="buttons">
+        <button id="submitMessage">Gönder</button>
+        <button onclick="showPage('page7')">Geri Dön</button>
+      </div>
+    </div>
+  </div>
+
   <script>
-    // Sayfa yüklendiğinde müziği başlat
+    // Firebase yapılandırması (BU BÖLÜMÜ KENDİ FIREBASE PROJE BİLGİLERİNİZLE DEĞİŞTİRİN)
+    const firebaseConfig = {
+      apiKey: "AIzaSyBh10LwOctzhTx5D1UZIci9SZ4HnKUKrpM",
+  authDomain: "mezuniyetsitesitakip.firebaseapp.com",
+  databaseURL: "https://mezuniyetsitesitakip-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "mezuniyetsitesitakip",
+  storageBucket: "mezuniyetsitesitakip.firebasestorage.app",
+  messagingSenderId: "1624725648",
+  appId: "1:1624725648:web:4b0c9c59f4c9149f5fa015",
+  measurementId: "G-Z2W3NFHBKR"
+    };
+
+    // Firebase'i başlat
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // Sayfa yüklendiğinde kullanıcı ziyaretini kaydet
     document.addEventListener('DOMContentLoaded', function() {
       const audio = document.getElementById('audio1');
       
+      // Ziyaret kaydı
+      db.collection('visits').add({
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        page: 'page1'
+      }).catch(error => console.error('Ziyaret kaydederken hata:', error));
+
       // Müziği önce sessiz başlat, sonra sesi aç
       setTimeout(() => {
         audio.muted = false;
         audio.play().catch(e => {
           console.log("Otomatik oynatma engellendi, kullanıcı etkileşimi bekleniyor...");
-          // Kullanıcı etkileşimi için yedek mekanizma
           document.body.addEventListener('click', function() {
             audio.play().catch(e => console.log("Tıklama sonrası oynatma hatası:", e));
           }, { once: true });
@@ -305,6 +358,12 @@
         if (newVideo) {
           newVideo.play().catch(error => console.log('Video oynatma hatası:', error));
         }
+
+        // Ziyaret kaydı
+        db.collection('visits').add({
+          timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+          page: pageId
+        }).catch(error => console.error('Ziyaret kaydederken hata:', error));
       }
       
       // Sayfa 7 için özel ayarlar
@@ -327,6 +386,7 @@
       const redButton = document.getElementById('redButton');
       const blueButton = document.getElementById('blueButton');
       const gameMessage = document.getElementById('gameMessage');
+      const submitButton = document.getElementById('submitMessage');
 
       const blueMessages = [
         'Yeni başlangıçlar seni bekliyor! Mezuniyetinle her şey mümkün.',
@@ -357,28 +417,31 @@
           gameMessage.textContent = randomMessage;
         });
       }
+
+      // Gönder butonu işlevi
+      if (submitButton) {
+        submitButton.addEventListener('click', () => {
+          const messageInput = document.getElementById('messageInput');
+          const message = messageInput.value.trim();
+          if (message) {
+            db.collection('messages').add({
+              message: message,
+              timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            })
+            .then(() => {
+              alert('Mesajınız gönderildi!');
+              messageInput.value = '';
+            })
+            .catch(error => {
+              console.error('Mesaj gönderirken hata:', error);
+              alert('Mesaj gönderilirken bir hata oluştu.');
+            });
+          } else {
+            alert('Lütfen bir mesaj yazın!');
+          }
+        });
+      }
     });
-    // Sonsuza Dek butonunun event listener'ını güncelleyin
-document.querySelector('button[onclick="window.location.reload()"]').onclick = function(e) {
-  e.preventDefault();
-  showFinalPage();
-};
-
-function showFinalPage() {
-
-  
-  // Tüm sesleri durdur
-  document.querySelectorAll('audio').forEach(audio => {
-    audio.pause();
-    audio.currentTime = 0;
-  });
-  
-  // Tüm sayfaları gizle
-  document.querySelectorAll('.page').forEach(page => {
-    page.classList.remove('active');
-  });
-  
-}
   </script>
 </body>
 </html>
