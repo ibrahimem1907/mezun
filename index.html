@@ -1,26 +1,6 @@
-aşağıdaki koda ekle v8 i ve yeni sayfayı diğer hiçbir şeye elleme bir de butonu ekle
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <!-- HEAD ETİKETİNİN SONUNA EKLE -->
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-<script>
-  // Firebase konfigürasyonu
-  var firebaseConfig = {
- apiKey: "AIzaSyBh10LwOctzhTx5D1UZIci9SZ4HnKUKrpM",
-  authDomain: "mezuniyetsitesitakip.firebaseapp.com",
-  databaseURL: "https://mezuniyetsitesitakip-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "mezuniyetsitesitakip",
-  storageBucket: "mezuniyetsitesitakip.firebasestorage.app",
-  messagingSenderId: "1624725648",
-  appId: "1:1624725648:web:4b0c9c59f4c9149f5fa015",
-  measurementId: "G-Z2W3NFHBKR"
-  };
-  // Firebase'i başlat
-  firebase.initializeApp(firebaseConfig);
-</script>
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hatırladığım Sen</title>
@@ -272,22 +252,8 @@ aşağıdaki koda ekle v8 i ve yeni sayfayı diğer hiçbir şeye elleme bir de 
       <p id="gameMessage" class="game-message"></p>
       <div class="buttons">
         <button onclick="showPage('page1')">Başa Dön</button>
-        <button onclick="showPage('page8')">Yazı Yaz</button>
-
       </div>
     </div>
-    <div id="page8" class="page">
-  <div class="content">
-    <h1>Geleceğe Mesajın</h1>
-    <p>İstersen buraya küçük bir not bırakabilirsin. Belki bir gün geri dönüp okursun, kim bilir?</p>
-    <textarea id="userMessage" rows="5" style="width: 100%; padding: 10px;"></textarea>
-    <div class="buttons">
-      <button onclick="saveMessage()">Mesajı Kaydet</button>
-      <button onclick="showPage('page1')">Başa Dön</button>
-    </div>
-  </div>
-</div>
-
   </div>
 
   <script>
@@ -414,30 +380,5 @@ function showFinalPage() {
   
 }
   </script>
-  <script>
-  function showPage(pageId) {
-    const pages = document.querySelectorAll('.page');
-    pages.forEach(page => page.classList.remove('active'));
-    document.getElementById(pageId).classList.add('active');
-  }
-
-  function saveMessage() {
-    const message = document.getElementById('userMessage').value;
-    if (message.trim() !== "") {
-      firebase.database().ref('messages').push({
-        text: message,
-        timestamp: new Date().toISOString()
-      }).then(() => {
-        alert("Mesajın kaydedildi 🎉");
-        showPage('page1');
-      }).catch(error => {
-        alert("Bir hata oluştu 😢: " + error.message);
-      });
-    } else {
-      alert("Lütfen boş bırakma 🌸");
-    }
-  }
-</script>
-
 </body>
 </html>
