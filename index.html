@@ -1,16 +1,30 @@
+aşağıdaki koda ekle v8 i ve yeni sayfayı diğer hiçbir şeye elleme bir de butonu ekle
 <!DOCTYPE html>
 <html lang="tr">
 <head>
+  <!-- HEAD ETİKETİNİN SONUNA EKLE -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+<script>
+  // Firebase konfigürasyonu
+  var firebaseConfig = {
+ apiKey: "AIzaSyBh10LwOctzhTx5D1UZIci9SZ4HnKUKrpM",
+  authDomain: "mezuniyetsitesitakip.firebaseapp.com",
+  databaseURL: "https://mezuniyetsitesitakip-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "mezuniyetsitesitakip",
+  storageBucket: "mezuniyetsitesitakip.firebasestorage.app",
+  messagingSenderId: "1624725648",
+  appId: "1:1624725648:web:4b0c9c59f4c9149f5fa015",
+  measurementId: "G-Z2W3NFHBKR"
+  };
+  // Firebase'i başlat
+  firebase.initializeApp(firebaseConfig);
+</script>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hatırladığım Sen</title>
-  <!-- Firebase SDK v8 -->
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-analytics.js"></script>
   <style>
-    /* CSS kodunuz aynı kaldı */
     body {
       margin: 0;
       font-family: Arial, sans-serif;
@@ -28,77 +42,306 @@
       position: relative;
       text-align: center;
     }
-    /* ... Diğer CSS kuralları aynen kalacak ... */
+    .page.active {
+      display: flex;
+    }
+    .content {
+      max-width: 600px;
+      padding: 20px;
+      z-index: 1;
+    }
+    h1 {
+      font-size: 2em;
+      color: #2c3e50;
+      margin: 0;
+    }
+    p {
+      font-size: 1.1em;
+      line-height: 1.6;
+      margin: 20px 0;
+    }
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+      z-index: 10;
+      position: relative;
+      pointer-events: auto;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 1em;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      z-index: 10;
+      background-color: #3498db;
+      color: white;
+      pointer-events: auto;
+    }
+    button:hover {
+      opacity: 0.9;
+    }
+    #page1 .header-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      z-index: 1;
+    }
+    #page1 .gif {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+      background: transparent;
+      transition: transform 0.3s ease;
+      z-index: 1;
+    }
+    #page1 .gif:hover {
+      transform: scale(1.1);
+    }
+    #page2 {
+      background: url('https://cdn03.ciceksepeti.com/cicek/at4264-1/L/at4264-1-8dcdbb4e53b9817-89598a7c.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+    }
+    #page2 .content {
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 10px;
+    }
+    #page3 {
+      position: relative;
+      overflow: hidden;
+    }
+    #page3 video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+    #page3 .content {
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 10px;
+    }
+    #page7 .red-button {
+      background-color: #e74c3c;
+      color: white;
+      position: absolute;
+      transition: all 0.2s ease;
+    }
+    #page7 .blue-button {
+      background-color: #3498db;
+      color: white;
+    }
+    #page7 .game-message {
+      margin-top: 20px;
+      font-style: italic;
+      color: #2c3e50;
+      z-index: 1;
+    }
+    audio {
+      display: none;
+    }
+    @media (max-width: 600px) {
+      #page1 .header-container {
+        flex-direction: column;
+        gap: 10px;
+      }
+      #page1 .gif {
+        width: 50px;
+        height: 50px;
+      }
+      .content {
+        max-width: 90%;
+        padding: 15px;
+      }
+      .buttons {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
   </style>
 </head>
 <body>
-  <!-- Sayfa yapınız aynı kalacak -->
   <div id="page1" class="page active">
-    <!-- İçerikler aynı -->
+    <audio id="audio1" autoplay muted>
+      <source src="song1.mp3" type="audio/mpeg">
+    </audio>
+    <div class="content">
+      <div class="header-container">
+        <img class="gif" src="https://media.giphy.com/media/tFSqMSMnzPRTAdvKyr/giphy.gif" alt="Dans Eden GIF">
+        <h1>Hatırladığım Sen</h1>
+        <img class="gif" src="https://media.giphy.com/media/zINs6k7lwfawSbLOIc/giphy.gif" alt="Dans Eden GIF">
+      </div>
+      <p>Bu, sana küçük bir jest bir tebrik bir anı Mezuniyetin şerefine sadece içimden geldiği için yaptım. Hiçbir beklenti olmadan sadece güzel bir anıyı paylaşmak için. Hayatında yüksek ihtimalle birisi var ama olsun. Neyse bu sadece senin için bir tebessüm hediyesi. Hazır mısın başlıyalım.</p>
+      <div class="buttons">
+        <button onclick="showPage('page2')">Hadi Başlayalım</button>
+        <button onclick="showPage('page2')">Çiçek mi ? Unutmadan</button>
+      </div>
+    </div>
   </div>
-  <!-- Diğer sayfalar... -->
+
+  <div id="page2" class="page">
+    <audio id="audio2" src="song2.mp3" preload="auto"></audio>
+    <div class="content">
+        <img class="gif" 
+     src="https://media2.giphy.com/media/v1.Y2lkPTc9MGI3NjExdWF4M2xvbjhvdnY5Ynk4Y3k2NWpkOWNlNTU0Y3hzZ245cmI3YXBnaiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3ohhwfAa9rbXaZe86c/giphy.gif" 
+     alt="Dans Eden GIF"
+     style="width: 80px; height: 80px;">
+      <h1>Mezuniyet Çiçeğin</h1>
+      <p>Mezuniyetin için sana bir buket çiçek almak isterdim güllerle dolu tam senin sevdiğin gibi(belki alan olmuştur) O yüzden buradan sana sanal bir buket hediye ediyorum. Bu özel gününde başarılarını kutluyorum!</p>
+      <div class="buttons">
+        <button onclick="showPage('page3')">Devam Edelim</button>
+        <button onclick="showPage('page3')">Bir Anıya Gidelim</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="page3" class="page">
+    <video id="backgroundVideo" src="video.mp4" autoplay loop muted playsinline></video>
+    <audio id="audio3" src="song3.mp3" preload="auto"></audio>
+    <div class="content">
+      <h1>Bir Küçük Anı</h1>
+      <p>Arkadaki resmi hatırlıyor musun ? valla galeride dolaşırken buldum silmeden önce ekliyim dedim çiçek güzelmiş ha lkmgksdlfg</p>
+      <div class="buttons">
+        <button onclick="showPage('page4')">İlerleyelim</button>
+        <button onclick="showPage('page4')">Mezuniyete Doğru</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="page4" class="page">
+    <audio id="audio4" src="song4.mp3" preload="auto"></audio>
+    <div class="content">
+      <img class="gif" 
+     src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExYnFvZ29qejd3NHV5enFhMmJqdXkzcXd5NWp4ZHRpMGkwamV6ZmJzbiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/EN07uCL8sMNj26GO2g/giphy.gif" 
+     alt="Dans Eden GIF"
+     style="width: 80px; height: 80px;">
+      <h1>Mezuniyet Tebrikleri</h1>
+      <p>Mezuniyetin, hayatındaki en güzel dönüm noktalarından biri. Belki yan yana değiliz, ama bu başarını uzaktan da olsa kutluyorum. Umarım her şey hayallerindeki gibi olur, ve bu gün sana bir ömür tebessüm getirir.</p>
+      <div class="buttons">
+        <button onclick="showPage('page5')">Devam Edelim</button>
+        <button onclick="showPage('page5')">Geleceğe Bakalım</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="page5" class="page">
+    <audio id="audio5" src="song5.mp3" preload="auto"></audio>
+    <div class="content">
+      <h1>Ayrı Yollar, Güzel Dilekler</h1>
+      <p>Hayat bizi farklı yollara götürdü ama bu geçirdiğimiz güzel anıları silmiyor İkimiz de yeni hikayeler yazıyoruz yeni anılar biriktiriyoruz Sana bu yeni başlangıçlarda bol şans ve mutluluk diliyorum Kendi yolumda ben de ilerliyorum ve bu iyi hissettiriyor</p>
+      <div class="buttons">
+        <button onclick="showPage('page6')">Son Bir Sayfa</button>
+        <button onclick="showPage('page6')">Bitirelim</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="page6" class="page">
+    <audio id="audio6" src="song6.mp3" preload="auto"></audio>
+    <div class="content">
+      <h1>Son Bir Not</h1>
+      <p>Sen mezuniyetimde yazmamış olsan da bu site mezuniyetin için yapıldı Sadece içimden gelen bir jest. Belki gerçekten görüştüğün birisi var (baya dinine bağlandın) belki artık hiç hatırlamıyorsun ama olsun yüzünde ufak da olsa tebessüm oluşsun yeterli. Hayatta umarım her zaman mutlu olursun umarım beni arayacak beni düşünecek hiçbir anın olmaz.</p>
+      <div class="buttons">
+        <button onclick="showPage('page1')">Başa Dön</button>
+        <button onclick="showPage('page7')">Bir Oyun Oynayalım</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="page7" class="page">
+    <audio id="audio7" src="song7.mp3" preload="auto"></audio>
+    <div class="content">
+      <img class="gif" 
+     src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZmdhM296MnFyeTQyd3pjZHcxZnViajVjdW1mNGwwNnBvbGNtMzdxZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/akj83ukXAU4sSDglpU/giphy.gif" 
+     alt="Dans Eden GIF"
+     style="width: 80px; height: 80px;">
+      <h1>Kırmızı Butona Basarsan(basamazsın)</h1>
+      <p>Kırmızı butona basarsan, geçmişe küçük bir selam gönderirsin. Mavi butona basarsan, geleceğe bir adım atarsın. Sence ne yapmalısın?</p>
+      <div class="buttons">
+        <button id="redButton" class="red-button">Kırmızı</button>
+        <button id="blueButton" class="blue-button">Mavi</button>
+      </div>
+      <p id="gameMessage" class="game-message"></p>
+      <div class="buttons">
+        <button onclick="showPage('page1')">Başa Dön</button>
+        <button onclick="showPage('page8')">Yazı Yaz</button>
+
+      </div>
+    </div>
+    <div id="page8" class="page">
+  <div class="content">
+    <h1>Geleceğe Mesajın</h1>
+    <p>İstersen buraya küçük bir not bırakabilirsin. Belki bir gün geri dönüp okursun, kim bilir?</p>
+    <textarea id="userMessage" rows="5" style="width: 100%; padding: 10px;"></textarea>
+    <div class="buttons">
+      <button onclick="saveMessage()">Mesajı Kaydet</button>
+      <button onclick="showPage('page1')">Başa Dön</button>
+    </div>
+  </div>
+</div>
+
+  </div>
 
   <script>
-    // Firebase v8 Yapılandırması
-    const firebaseConfig = {
-      apiKey: "AIzaSyBh10LwOctzhTx5D1UZIci9SZ4HnKUKrpM",
-      authDomain: "mezuniyetsitesitakip.firebaseapp.com",
-      databaseURL: "https://mezuniyetsitesitakip-default-rtdb.europe-west1.firebasedatabase.app",
-      projectId: "mezuniyetsitesitakip",
-      storageBucket: "mezuniyetsitesitakip.appspot.com",
-      messagingSenderId: "1624725648",
-      appId: "1:1624725648:web:4b0c9c59f4c9149f5fa015",
-      measurementId: "G-Z2W3NFHBKR"
-    };
-
-    // Firebase'i başlat
-    firebase.initializeApp(firebaseConfig);
-    const database = firebase.database();
-    const auth = firebase.auth();
-    const analytics = firebase.analytics();
-
-    // Sayfa geçiş fonksiyonu
-    function showPage(pageId) {
-      console.log(`Sayfa değiştiriliyor: ${pageId}`);
+    // Sayfa yüklendiğinde müziği başlat
+    document.addEventListener('DOMContentLoaded', function() {
+      const audio = document.getElementById('audio1');
       
-      // Tüm sayfaları gizle
-      document.querySelectorAll('.page').forEach(page => {
-        page.classList.remove('active');
-      });
+      // Müziği önce sessiz başlat, sonra sesi aç
+      setTimeout(() => {
+        audio.muted = false;
+        audio.play().catch(e => {
+          console.log("Otomatik oynatma engellendi, kullanıcı etkileşimi bekleniyor...");
+          // Kullanıcı etkileşimi için yedek mekanizma
+          document.body.addEventListener('click', function() {
+            audio.play().catch(e => console.log("Tıklama sonrası oynatma hatası:", e));
+          }, { once: true });
+        });
+      }, 1000);
+    });
 
+    function showPage(pageId) {
+      console.log(`Switching to page: ${pageId}`);
       // Tüm sesleri durdur
       document.querySelectorAll('audio').forEach(audio => {
         audio.pause();
         audio.currentTime = 0;
       });
-
-      // Tüm videoları durdur
       document.querySelectorAll('video').forEach(video => {
         video.pause();
         video.currentTime = 0;
       });
-
-      // Yeni sayfayı göster
+      
+      // Tüm sayfaları gizle
+      document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active');
+      });
+      
+      // Seçilen sayfayı göster
       const newPage = document.getElementById(pageId);
       if (newPage) {
         newPage.classList.add('active');
-
-        // Yeni sayfanın sesini oynat
+        
+        // Yeni sayfadaki sesi/videoyu başlat
         const newAudio = newPage.querySelector('audio');
         if (newAudio) {
-          newAudio.play().catch(error => {
-            console.log('Ses oynatma hatası:', error);
-          });
+          newAudio.play().catch(error => console.log('Ses oynatma hatası:', error));
         }
-
-        // Yeni sayfanın videosunu oynat
         const newVideo = newPage.querySelector('video');
         if (newVideo) {
           newVideo.play().catch(error => console.log('Video oynatma hatası:', error));
         }
       }
-
-      // Özel sayfa ayarları
+      
+      // Sayfa 7 için özel ayarlar
       if (pageId === 'page7') {
         const redButton = document.getElementById('redButton');
         if (redButton) {
@@ -111,65 +354,10 @@
           gameMessage.textContent = '';
         }
       }
-
-      if (pageId === 'page8') {
-        const userText = document.getElementById('userText');
-        if (userText) {
-          userText.textContent = '';
-        }
-      }
     }
 
-    // DOM yüklendiğinde
+    // Kırmızı buton hareketi
     document.addEventListener('DOMContentLoaded', function() {
-      // Anonim oturum açma
-      auth.signInAnonymously()
-        .then(() => console.log("Anonim giriş başarılı"))
-        .catch(error => console.error("Anonim giriş hatası:", error));
-
-      // İlk sayfanın sesini oynat
-      const audio = document.getElementById('audio1');
-      if (audio) {
-        setTimeout(() => {
-          audio.muted = false;
-          audio.play().catch(e => {
-            console.log("Otomatik oynatma engellendi, kullanıcı etkileşimi bekleniyor...");
-            document.body.addEventListener('click', function() {
-              audio.play().catch(e => console.log("Tıklama sonrası oynatma hatası:", e));
-            }, { once: true });
-          });
-        }, 1000);
-      }
-
-      // Yazı yazma özelliği (page8)
-      const submitText = document.getElementById('submitText');
-      const userInput = document.getElementById('userInput');
-      const userText = document.getElementById('userText');
-
-      if (submitText && userInput && userText) {
-        submitText.addEventListener('click', () => {
-          const message = userInput.value.trim();
-          if (message) {
-            database.ref('messages').push({
-              text: message,
-              timestamp: firebase.database.ServerValue.TIMESTAMP,
-              userId: auth.currentUser ? auth.currentUser.uid : 'anonymous'
-            })
-            .then(() => {
-              userText.textContent = `Mesaj gönderildi: ${message}`;
-              userInput.value = '';
-            })
-            .catch(error => {
-              console.error('Mesaj kaydetme hatası:', error);
-              userText.textContent = 'Mesaj kaydedilemedi, lütfen tekrar deneyin.';
-            });
-          } else {
-            userText.textContent = 'Lütfen bir mesaj yazın.';
-          }
-        });
-      }
-
-      // Kırmızı buton hareketi
       const redButton = document.getElementById('redButton');
       const blueButton = document.getElementById('blueButton');
       const gameMessage = document.getElementById('gameMessage');
@@ -181,53 +369,19 @@
         'Dünya seninle daha güzel, ilerle ve parlamaya devam et!'
       ];
 
-      if (redButton && blueButton) {
-        const getSafePosition = () => {
+      if (redButton) {
+        redButton.addEventListener('mouseover', () => {
           const container = redButton.parentElement.parentElement;
-          const blueRect = blueButton.getBoundingClientRect();
-          const containerRect = container.getBoundingClientRect();
-          const buffer = 30;
-
-          let newX, newY;
-          let attempts = 0;
-          const maxAttempts = 10;
-
-          do {
-            newX = Math.random() * (containerRect.width - redButton.offsetWidth - 20);
-            newY = Math.random() * (containerRect.height - redButton.offsetHeight - 20);
-            attempts++;
-          } while (
-            attempts < maxAttempts &&
-            newX >= blueRect.left - containerRect.left - buffer &&
-            newX <= blueRect.right - containerRect.left + buffer &&
-            newY >= blueRect.top - containerRect.top - buffer &&
-            newY <= blueRect.bottom - containerRect.top + buffer
-          );
-
-          if (attempts >= maxAttempts) {
-            newX = blueRect.left - containerRect.left < containerRect.width / 2
-              ? blueRect.right - containerRect.left + buffer
-              : blueRect.left - containerRect.left - redButton.offsetWidth - buffer;
-            newY = blueRect.top - containerRect.top + buffer;
-          }
-
-          return { x: newX, y: newY };
-        };
-
-        const moveRedButton = () => {
-          const { x, y } = getSafePosition();
+          const maxX = container.clientWidth - redButton.offsetWidth - 20;
+          const maxY = container.clientHeight - redButton.offsetHeight - 20;
+          const newX = Math.random() * maxX;
+          const newY = Math.random() * maxY;
           redButton.style.position = 'absolute';
-          redButton.style.left = `${x}px`;
-          redButton.style.top = `${y}px`;
+          redButton.style.left = `${newX}px`;
+          redButton.style.top = `${newY}px`;
           if (gameMessage) {
             gameMessage.textContent = 'Kırmızı buton biraz inatçı gibi değil mi ? sen boşa vakit kaybetme maviye bas konuştuğun kişiye yaz';
           }
-        };
-
-        redButton.addEventListener('mouseover', moveRedButton);
-        redButton.addEventListener('touchstart', (e) => {
-          e.preventDefault();
-          moveRedButton();
         });
       }
 
@@ -238,6 +392,52 @@
         });
       }
     });
+    // Sonsuza Dek butonunun event listener'ını güncelleyin
+document.querySelector('button[onclick="window.location.reload()"]').onclick = function(e) {
+  e.preventDefault();
+  showFinalPage();
+};
+
+function showFinalPage() {
+
+  
+  // Tüm sesleri durdur
+  document.querySelectorAll('audio').forEach(audio => {
+    audio.pause();
+    audio.currentTime = 0;
+  });
+  
+  // Tüm sayfaları gizle
+  document.querySelectorAll('.page').forEach(page => {
+    page.classList.remove('active');
+  });
+  
+}
   </script>
+  <script>
+  function showPage(pageId) {
+    const pages = document.querySelectorAll('.page');
+    pages.forEach(page => page.classList.remove('active'));
+    document.getElementById(pageId).classList.add('active');
+  }
+
+  function saveMessage() {
+    const message = document.getElementById('userMessage').value;
+    if (message.trim() !== "") {
+      firebase.database().ref('messages').push({
+        text: message,
+        timestamp: new Date().toISOString()
+      }).then(() => {
+        alert("Mesajın kaydedildi 🎉");
+        showPage('page1');
+      }).catch(error => {
+        alert("Bir hata oluştu 😢: " + error.message);
+      });
+    } else {
+      alert("Lütfen boş bırakma 🌸");
+    }
+  }
+</script>
+
 </body>
 </html>
