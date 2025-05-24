@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hatırladığım Sen</title>
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js"></script>
+  <!-- Firebase SDK (En son sürüm) -->
+  <script src="https://www.gstatic.com/firebasejs/10.24.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.24.0/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.24.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.24.0/firebase-analytics.js"></script>
   <style>
     body {
       margin: 0;
@@ -132,20 +132,23 @@
       color: #2c3e50;
       z-index: 1;
     }
-    #page7 .text-input-container {
+    #page8 {
+      background-color: #f4f4f9;
+    }
+    #page8 .text-input-container {
       margin-top: 20px;
-      display: none;
+      display: flex;
       flex-direction: column;
       gap: 10px;
     }
-    #page7 .text-input-container input {
+    #page8 .text-input-container input {
       padding: 10px;
       font-size: 1em;
       border-radius: 5px;
       border: 1px solid #ccc;
-      width: 200px;
+      width: 300px;
     }
-    #page7 .user-text {
+    #page8 .user-text {
       margin-top: 20px;
       font-size: 1em;
       color: #2c3e50;
@@ -171,13 +174,16 @@
         flex-direction: column;
         gap: 10px;
       }
+      #page8 .text-input-container input {
+        width: 90%;
+      }
     }
   </style>
 </head>
 <body>
   <div id="page1" class="page active">
     <audio id="audio1" autoplay muted>
-      <source src="song1.mp3" type="audio/mpeg">
+      <source src="assets/song1.mp3" type="audio/mpeg">
     </audio>
     <div class="content">
       <div class="header-container">
@@ -194,7 +200,7 @@
   </div>
 
   <div id="page2" class="page">
-    <audio id="audio2" src="song2.mp3" preload="auto"></audio>
+    <audio id="audio2" src="assets/song2.mp3" preload="auto"></audio>
     <div class="content">
       <img class="gif" src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExdWF4M2xvbjhvdnY5Ynk4Y3k2NWpkOWNlNTU0Y3hzZ245cmI3YXBnaiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3ohhwfAa9rbXaZe86c/giphy.gif" alt="Dans Eden GIF" style="width: 80px; height: 80px;">
       <h1>Mezuniyet Çiçeğin</h1>
@@ -207,8 +213,8 @@
   </div>
 
   <div id="page3" class="page">
-    <video id="backgroundVideo" src="video.mp4" autoplay loop muted playsinline></video>
-    <audio id="audio3" src="song3.mp3" preload="auto"></audio>
+    <video id="backgroundVideo" src="assets/video.mp4" autoplay loop muted playsinline></video>
+    <audio id="audio3" src="assets/song3.mp3" preload="auto"></audio>
     <div class="content">
       <h1>Bir Küçük Anı</h1>
       <p>Arkadaki resmi hatırlıyor musun ? valla galeride dolaşırken buldum silmeden önce ekliyim dedim çiçek güzelmiş ha lkmgksdlfg</p>
@@ -220,7 +226,7 @@
   </div>
 
   <div id="page4" class="page">
-    <audio id="audio4" src="song4.mp3" preload="auto"></audio>
+    <audio id="audio4" src="assets/song4.mp3" preload="auto"></audio>
     <div class="content">
       <img class="gif" src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExYnFvZ29qejd3NHV5enFhMmJqdXkzcXd5NWp4ZHRpMGkwamV6ZmJzbiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/EN07uCL8sMNj26GO2g/giphy.gif" alt="Dans Eden GIF" style="width: 80px; height: 80px;">
       <h1>Mezuniyet Tebrikleri</h1>
@@ -233,7 +239,7 @@
   </div>
 
   <div id="page5" class="page">
-    <audio id="audio5" src="song5.mp3" preload="auto"></audio>
+    <audio id="audio5" src="assets/song5.mp3" preload="auto"></audio>
     <div class="content">
       <h1>Ayrı Yollar, Güzel Dilekler</h1>
       <p>Hayat bizi farklı yollara götürdü ama bu geçirdiğimiz güzel anıları silmiyor İkimiz de yeni hikayeler yazıyoruz yeni anılar biriktiriyoruz Sana bu yeni başlangıçlarda bol şans ve mutluluk diliyorum Kendi yolumda ben de ilerliyorum ve bu iyi hissettiriyor</p>
@@ -245,7 +251,7 @@
   </div>
 
   <div id="page6" class="page">
-    <audio id="audio6" src="song6.mp3" preload="auto"></audio>
+    <audio id="audio6" src="assets/song6.mp3" preload="auto"></audio>
     <div class="content">
       <h1>Son Bir Not</h1>
       <p>Sen mezuniyetimde yazmamış olsan da bu site mezuniyetin için yapıldı Sadece içimden gelen bir jest. Belki gerçekten görüştüğün birisi var (baya dinine bağlandın) belki artık hiç hatırlamıyorsun ama olsun yüzünde ufak da olsa tebessüm oluşsun yeterli. Hayatta umarım her zaman mutlu olursun umarım beni arayacak beni düşünecek hiçbir anın olmaz.</p>
@@ -257,7 +263,7 @@
   </div>
 
   <div id="page7" class="page">
-    <audio id="audio7" src="song7.mp3" preload="auto"></audio>
+    <audio id="audio7" src="assets/song7.mp3" preload="auto"></audio>
     <div class="content">
       <img class="gif" src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZmdhM296MnFyeTQyd3pjZHcxZnViajVjdW1mNGwwNnBvbGNtMzdxZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/akj83ukXAU4sSDglpU/giphy.gif" alt="Dans Eden GIF" style="width: 80px; height: 80px;">
       <h1>Kırmızı Butona Basarsan(basamazsın)</h1>
@@ -268,94 +274,177 @@
       </div>
       <p id="gameMessage" class="game-message"></p>
       <div class="buttons">
-        <button id="writeButton">Yazı Yaz</button>
+        <button id="writeButton" onclick="showPage('page8')">Yazı Yaz</button>
         <button onclick="showPage('page1')">Başa Dön</button>
       </div>
-      <div id="textInputContainer" class="text-input-container">
+    </div>
+  </div>
+
+  <div id="page8" class="page">
+    <audio id="audio8" src="assets/song8.mp3" preload="auto"></audio>
+    <div class="content">
+      <h1>Bir Mesaj Bırak</h1>
+      <p>Burada içinden gelenleri yazabilirsin. Mesajın bende kalacak, merak etme!</p>
+      <div class="text-input-container">
         <input type="text" id="userInput" placeholder="Mesajınızı yazın...">
         <button id="submitText">Gönder</button>
       </div>
       <p id="userText" class="user-text"></p>
+      <div class="buttons">
+        <button onclick="showPage('page7')">Geri Dön</button>
+      </div>
     </div>
   </div>
 
   <script>
     // Firebase Yapılandırması
     const firebaseConfig = {
-       apiKey: "AIzaSyBh10LwOctzhTx5D1UZIci9SZ4HnKUKrpM",
-  authDomain: "mezuniyetsitesitakip.firebaseapp.com",
-  databaseURL: "https://mezuniyetsitesitakip-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "mezuniyetsitesitakip",
-  storageBucket: "mezuniyetsitesitakip.firebasestorage.app",
-  messagingSenderId: "1624725648",
-  appId: "1:1624725648:web:4b0c9c59f4c9149f5fa015",
-  measurementId: "G-Z2W3NFHBKR"
+      apiKey: "AIzaSyBh10LwOctzhTx5D1UZIci9SZ4HnKUKrpM",
+      authDomain: "mezuniyetsitesitakip.firebaseapp.com",
+      databaseURL: "https://mezuniyetsitesitakip-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "mezuniyetsitesitakip",
+      storageBucket: "mezuniyetsitesitakip.appspot.com",
+      messagingSenderId: "1624725648",
+      appId: "1:1624725648:web:4b0c9c59f4c9149f5fa015",
+      measurementId: "G-Z2W3NFHBKR"
     };
 
     // Firebase'i başlat
-    firebase.initializeApp(firebaseConfig);
-    const database = firebase.database();
-    const auth = firebase.auth();
-    const analytics = firebase.analytics();
+    let firebaseInitialized = false;
+    try {
+      firebase.initializeApp(firebaseConfig);
+      firebaseInitialized = true;
+      console.log("Firebase başlatıldı.");
+    } catch (error) {
+      console.error("Firebase başlatma hatası:", error);
+    }
 
-    // Sayfa yüklendiğinde anonim oturum aç ve Analytics olaylarını kaydet
+    // Firebase modüllerini başlat
+    let database, auth, analytics;
+    if (firebaseInitialized) {
+      database = firebase.database ? firebase.database() : null;
+      auth = firebase.auth ? firebase.auth() : null;
+      analytics = firebase.analytics ? firebase.analytics() : null;
+    }
+
+    // Sayfa geçiş fonksiyonu
+    function showPage(pageId) {
+      console.log(`Sayfa değiştiriliyor: ${pageId}`);
+      
+      // Tüm sayfaları gizle
+      document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active');
+      });
+
+      // Tüm sesleri durdur
+      document.querySelectorAll('audio').forEach(audio => {
+        audio.pause();
+        audio.currentTime = 0;
+      });
+
+      // Tüm videoları durdur
+      document.querySelectorAll('video').forEach(video => {
+        video.pause();
+        video.currentTime = 0;
+      });
+
+      // Yeni sayfayı göster
+      const newPage = document.getElementById(pageId);
+      if (newPage) {
+        newPage.classList.add('active');
+
+        // Yeni sayfanın sesini oynat
+        const newAudio = newPage.querySelector('audio');
+        if (newAudio) {
+          newAudio.play().catch(error => {
+            console.log('Ses oynatma hatası:', error);
+            // Kullanıcı etkileşimi sonrası tekrar dene
+            document.addEventListener('click', function tryPlayAudio() {
+              newAudio.play().then(() => {
+                document.removeEventListener('click', tryPlayAudio);
+              }).catch(e => console.log('Tekrar deneme hatası:', e));
+            }, { once: true });
+          });
+        }
+
+        // Yeni sayfanın videosunu oynat
+        const newVideo = newPage.querySelector('video');
+        if (newVideo) {
+          newVideo.play().catch(error => console.log('Video oynatma hatası:', error));
+        }
+      }
+
+      // Özel sayfa ayarları
+      if (pageId === 'page7') {
+        const redButton = document.getElementById('redButton');
+        if (redButton) {
+          redButton.style.position = '';
+          redButton.style.left = '';
+          redButton.style.top = '';
+        }
+        const gameMessage = document.getElementById('gameMessage');
+        if (gameMessage) {
+          gameMessage.textContent = '';
+        }
+      }
+
+      if (pageId === 'page8') {
+        const userText = document.getElementById('userText');
+        if (userText) {
+          userText.textContent = '';
+        }
+      }
+    }
+
+    // Sayfa yüklendiğinde yapılacaklar
     document.addEventListener('DOMContentLoaded', function() {
-      // Anonim oturum açma
-      auth.signInAnonymously().then((userCredential) => {
-        const userId = userCredential.user.uid;
-        // Kullanıcı girişini kaydet
-        database.ref('users/' + userId).set({
-          timestamp: new Date().toISOString()
-        }).catch(error => console.error('Kullanıcı kaydetme hatası:', error));
-        // Analytics: Sayfa ziyareti
-        analytics.logEvent('page_view', { page_title: 'Hatırladığım Sen' });
-      }).catch(error => console.error('Anonim oturum açma hatası:', error));
+      // Anonim oturum açma (Firebase başlatıldıysa)
+      if (firebaseInitialized && auth) {
+        auth.signInAnonymously().catch(error => console.error('Anonim oturum açma hatası:', error));
+      }
 
-      // Ses oynatma
+      // İlk sayfanın sesini oynat
       const audio = document.getElementById('audio1');
-      setTimeout(() => {
-        audio.muted = false;
-        audio.play().catch(e => {
-          console.log("Otomatik oynatma engellendi, kullanıcı etkileşimi bekleniyor...");
-          document.body.addEventListener('click', function() {
-            audio.play().catch(e => console.log("Tıklama sonrası oynatma hatası:", e));
-          }, { once: true });
-        });
-      }, 1000);
+      if (audio) {
+        setTimeout(() => {
+          audio.muted = false;
+          audio.play().catch(e => {
+            console.log("Otomatik oynatma engellendi, kullanıcı etkileşimi bekleniyor...");
+            document.body.addEventListener('click', function() {
+              audio.play().catch(e => console.log("Tıklama sonrası oynatma hatası:", e));
+            }, { once: true });
+          });
+        }, 1000);
+      }
 
-      // Yazı yazma özelliği
-      const writeButton = document.getElementById('writeButton');
-      const textInputContainer = document.getElementById('textInputContainer');
-      const userInput = document.getElementById('userInput');
+      // Yazı yazma özelliği (page8)
       const submitText = document.getElementById('submitText');
+      const userInput = document.getElementById('userInput');
       const userText = document.getElementById('userText');
 
-      if (writeButton && textInputContainer && userInput && submitText && userText) {
-        writeButton.addEventListener('click', () => {
-          textInputContainer.style.display = 'flex';
-          // Analytics: Yazı yaz butonuna tıklama
-          analytics.logEvent('write_button_click');
-        });
-
+      if (submitText && userInput && userText) {
         submitText.addEventListener('click', () => {
           const message = userInput.value.trim();
           if (message) {
-            const userId = auth.currentUser ? auth.currentUser.uid : 'anonymous';
-            // Mesajı Firebase'e kaydet
-            database.ref('messages').push({
-              text: message,
-              timestamp: new Date().toISOString(),
-              userId: userId
-            }).then(() => {
-              userText.textContent = `Yazılan mesaj: ${message}`;
+            if (firebaseInitialized && database && auth) {
+              const userId = auth.currentUser ? auth.currentUser.uid : 'anonymous';
+              database.ref('messages').push({
+                text: message,
+                timestamp: new Date().toISOString(),
+                userId: userId
+              }).then(() => {
+                userText.textContent = `Mesaj gönderildi: ${message}`;
+                userInput.value = '';
+              }).catch(error => {
+                console.error('Mesaj kaydetme hatası:', error);
+                userText.textContent = 'Mesaj kaydedilemedi, lütfen tekrar deneyin.';
+              });
+            } else {
+              userText.textContent = `Mesajınız: ${message} (Firebase bağlantısı olmadığı için kaydedilemedi)`;
               userInput.value = '';
-              textInputContainer.style.display = 'none';
-              // Analytics: Mesaj gönderme
-              analytics.logEvent('message_sent');
-            }).catch(error => {
-              console.error('Mesaj kaydetme hatası:', error);
-              userText.textContent = 'Mesaj kaydedilemedi, lütfen tekrar deneyin.';
-            });
+            }
+          } else {
+            userText.textContent = 'Lütfen bir mesaj yazın.';
           }
         });
       }
@@ -426,62 +515,9 @@
         blueButton.addEventListener('click', () => {
           const randomMessage = blueMessages[Math.floor(Math.random() * blueMessages.length)];
           gameMessage.textContent = randomMessage;
-          // Analytics: Mavi butona tıklama
-          analytics.logEvent('blue_button_click');
         });
       }
     });
-
-    function showPage(pageId) {
-      console.log(`Switching to page: ${pageId}`);
-      document.querySelectorAll('audio').forEach(audio => {
-        audio.pause();
-        audio.currentTime = 0;
-      });
-      document.querySelectorAll('video').forEach(video => {
-        video.pause();
-        video.currentTime = 0;
-      });
-
-      document.querySelectorAll('.page').forEach(page => {
-        page.classList.remove('active');
-      });
-
-      const newPage = document.getElementById(pageId);
-      if (newPage) {
-        newPage.classList.add('active');
-
-        const newAudio = newPage.querySelector('audio');
-        if (newAudio) {
-          newAudio.play().catch(error => console.log('Ses oynatma hatası:', error));
-        }
-        const newVideo = newPage.querySelector('video');
-        if (newVideo) {
-          newVideo.play().catch(error => console.log('Video oynatma hatası:', error));
-        }
-      }
-
-      if (pageId === 'page7') {
-        const redButton = document.getElementById('redButton');
-        if (redButton) {
-          redButton.style.position = '';
-          redButton.style.left = '';
-          redButton.style.top = '';
-        }
-        const gameMessage = document.getElementById('gameMessage');
-        if (gameMessage) {
-          gameMessage.textContent = '';
-        }
-        const textInputContainer = document.getElementById('textInputContainer');
-        if (textInputContainer) {
-          textInputContainer.style.display = 'none';
-        }
-        const userText = document.getElementById('userText');
-        if (userText) {
-          userText.textContent = '';
-        }
-      }
-    }
   </script>
 </body>
 </html>
