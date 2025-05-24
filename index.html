@@ -114,10 +114,12 @@
       color: white;
       position: absolute;
       transition: all 0.2s ease;
+      z-index: 110; /* Mavi butonun üstünde kalması için */
     }
     #page7 .blue-button {
       background-color: #3498db;
       color: white;
+      z-index: 10; /* Mavi buton kırmızının altında */
     }
     #page7 .game-message {
       margin-top: 20px;
@@ -217,7 +219,7 @@
     <div class="content">
       <h1>Ayrı Yollar, Güzel Dilekler</h1>
       <p>Hayat bizi farklı yollara götürdü ama bu geçirdiğimiz güzel anıları silmiyor İkimiz de yeni hikayeler yazıyoruz yeni anılar biriktiriyoruz Sana bu yeni başlangıçlarda bol şans ve mutluluk diliyorum Kendi yolumda ben de ilerliyorum ve bu iyi hissettiriyor</p>
-      <div class="buttons">
+    <div class="buttons">
         <button onclick="showPage('page6')">Son Bir Sayfa</button>
         <button onclick="showPage('page6')">Bitirelim</button>
       </div>
@@ -335,19 +337,56 @@
         'Dünya seninle daha güzel, ilerle ve parlamaya devam et!'
       ];
 
-      if (redButton) {
-        redButton.addEventListener('mouseover', () => {
+      if (redButton && blueButton) {
+        // Mavi butonun pozisyonunu al
+        const getSafePosition = () => {
           const container = redButton.parentElement.parentElement;
-          const maxX = container.clientWidth - redButton.offsetWidth - 20;
-          const maxY = container.clientHeight - redButton.offsetHeight - 20;
-          const newX = Math.random() * maxX;
-          const newY = Math.random() * maxY;
+          const blueRect = blueButton.getBoundingClientRect();
+          const containerRect = container.getBoundingClientRect();
+          const buffer = 30; // Mavi butondan minimum mesafe
+
+          let newX, newY;
+          let attempts = 0;
+          const maxAttempts = 10;
+
+          do {
+            newX = Math.random() * (containerRect.width - redButton.offsetWidth - 20);
+            newY = Math.random() * (containerRect.height - redButton.offsetHeight - 20);
+            attempts++;
+          } while (
+            attempts < maxAttempts &&
+            newX >= blueRect.left - containerRect.left - buffer &&
+            newX <= blueRect.right - containerRect.left + buffer &&
+            newY >= blueRect.top - containerRect.top - buffer &&
+            newY <= blueRect.bottom - containerRect.top + buffer
+          );
+
+          // Eğer uygun pozisyon bulunamazsa, varsayılan bir pozisyon
+          if (attempts >= maxAttempts) {
+            newX = blueRect.left - containerRect.left < containerRect.width / 2
+              ? blueRect.right - containerRect.left + buffer
+              : blueRect.left - containerRect.left - redButton.offsetWidth - buffer;
+            newY = blueRect.top - containerRect.top + buffer;
+          }
+
+          return { x: newX, y: newY };
+        };
+
+        // Hem mouseover hem touchstart için hareket
+        const moveRedButton = () => {
+          const { x, y } = getSafePosition();
           redButton.style.position = 'absolute';
-          redButton.style.left = `${newX}px`;
-          redButton.style.top = `${newY}px`;
+          redButton.style.left = `${x}px`;
+          redButton.style.top = `${y}px`;
           if (gameMessage) {
             gameMessage.textContent = 'Kırmızı buton biraz inatçı gibi değil mi ? sen boşa vakit kaybetme maviye bas konuştuğun kişiye yaz';
           }
+        };
+
+        redButton.addEventListener('mouseover', moveRedButton);
+        redButton.addEventListener('touchstart', (e) => {
+          e.preventDefault(); // Varsayılan dokunma davranışını engelle
+          moveRedButton();
         });
       }
 
@@ -358,27 +397,6 @@
         });
       }
     });
-    // Sonsuza Dek butonunun event listener'ını güncelleyin
-document.querySelector('button[onclick="window.location.reload()"]').onclick = function(e) {
-  e.preventDefault();
-  showFinalPage();
-};
-
-function showFinalPage() {
-
-  
-  // Tüm sesleri durdur
-  document.querySelectorAll('audio').forEach(audio => {
-    audio.pause();
-    audio.currentTime = 0;
-  });
-  
-  // Tüm sayfaları gizle
-  document.querySelectorAll('.page').forEach(page => {
-    page.classList.remove('active');
-  });
-  
-}
   </script>
 </body>
 </html>
