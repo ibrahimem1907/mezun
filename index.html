@@ -169,7 +169,7 @@
     <div class="content">
       <div class="header-container">
         <img class="gif" src="https://media.giphy.com/media/tFSqMSMnzPRTAdvKyr/giphy.gif" alt="Dans Eden GIF">
-        <h1>Hatırladığım Sen</h1>
+        <h1>Hatırladığım Sen Tekrar Girdiysen Eğer Site Değişti Kırmızı Buton Oyununda Yeni Bir Buton Var Tıklarsan Görürsün</h1>
         <img class="gif" src="https://media.giphy.com/media/zINs6k7lwfawSbLOIc/giphy.gif" alt="Dans Eden GIF">
       </div>
       <p>Bu, sana küçük bir jest bir tebrik bir anı Mezuniyetin şerefine sadece içimden geldiği için yaptım. Hiçbir beklenti olmadan sadece güzel bir anıyı paylaşmak için. Hayatında yüksek ihtimalle birisi var ama olsun. Neyse bu sadece senin için bir tebessüm hediyesi. Hazır mısın başlıyalım.</p>
@@ -243,29 +243,29 @@
     </div>
   </div>
 
-  <div id="page7" class="page">
-    <audio id="audio7" src="song7.mp3" preload="auto"></audio>
-    <div class="content">
-      <img class="gif" src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZmdhM296MnFyeTQyd3pjZHcxZnViajVjdW1mNGwwNnBvbGNtMzdxZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/akj83ukXAU4sSDglpU/giphy.gif" alt="Dans Eden GIF" style="width: 80px; height: 80px;">
-      <h1>Kırmızı Butona Basarsan(basamazsın)</h1>
-      <p>Kırmızı butona basarsan, geçmişe küçük bir selam gönderirsin. Mavi butona basarsan, geleceğe bir adım atarsın. Sence ne yapmalısın?</p>
-      <div class="buttons">
-        <button id="redButton" class="red-button">Kırmızı</button>
-        <button id="blueButton" class="blue-button">Mavi</button>
-        <button onclick="showPage('page8')">Mesaj Yaz</button>
-      </div>
-      <p id="gameMessage" class="game-message"></p>
-      <div class="buttons">
-        <button onclick="showPage('page1')">Başa Dön</button>
-      </div>
+<div id="page7" class="page">
+  <audio id="audio7" src="song7.mp3" preload="auto"></audio>
+  <div class="content">
+    <img class="gif" src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZmdhM296MnFyeTQyd3pjZHcxZnViajVjdW1mNGwwNnBvbGNtMzdxZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/akj83ukXAU4sSDglpU/giphy.gif" alt="Dans Eden GIF" style="width: 80px; height: 80px;">
+    <h1>Kırmızı Butona Basarsan(basamazsın)</h1>
+    <p>Kırmızı butona basarsan, geçmişe küçük bir selam gönderirsin. Mavi butona basarsan, geleceğe bir adım atarsın. Sence ne yapmalısın?</p>
+    <div class="buttons">
+      <button id="redButton" class="red-button">Kırmızı</button>
+      <button id="blueButton" class="blue-button">Mavi</button>
+    </div>
+    <p id="gameMessage" class="game-message"></p>
+    <div class="buttons">
+      <button onclick="showPage('page1')">Başa Dön</button>
+      <button onclick="showPage('page8')">Mesaj Yaz</button> <!-- Başa Dön'ün yanına eklendi -->
     </div>
   </div>
+</div>
 
   <div id="page8" class="page">
     <audio id="audio8" src="song8.mp3" preload="auto"></audio>
     <div class="content">
-      <h1>Mesajın Bana Ulaşsın</h1>
-      <p>Burada içinden geçenleri yazabilirsin. Mesajın bana ulaşacak ve kim bilir, belki bir tebessüm daha yaratır!</p>
+      <h1>İçini Dök</h1>
+      <p>Burada içinden geçenleri yazabilirsin. Mesajın ulaşmıyacak ama belki ulaşır kim bilir, belki bir tebessüm daha yaratır!</p>
       <textarea id="messageInput" rows="5" style="width: 100%; max-width: 500px; padding: 10px; font-size: 1em; border-radius: 5px; border: 1px solid #ccc; resize: vertical;"></textarea>
       <div class="buttons">
         <button onclick="sendMessage()">Gönder</button>
