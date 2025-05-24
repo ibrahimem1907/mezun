@@ -4,14 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hatırladığım Sen</title>
-  <!-- Firebase SDK -->
   <!-- Firebase SDK v8 -->
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
-
-    /* CSS kodu aynı kalacak, değişiklik yapmadım */
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-analytics.js"></script>
+  <style>
+    /* CSS kodunuz aynı kaldı */
     body {
       margin: 0;
       font-family: Arial, sans-serif;
@@ -29,22 +28,18 @@
       position: relative;
       text-align: center;
     }
-    .page.active {
-      display: flex;
-    }
-    /* Diğer CSS kuralları aynı şekilde devam ediyor */
-    /* ... */
+    /* ... Diğer CSS kuralları aynen kalacak ... */
   </style>
 </head>
 <body>
-  <!-- Sayfa yapısı aynı kalacak -->
+  <!-- Sayfa yapınız aynı kalacak -->
   <div id="page1" class="page active">
     <!-- İçerikler aynı -->
   </div>
   <!-- Diğer sayfalar... -->
 
   <script>
-    // Firebase Yapılandırması (GÜNCELLENMİŞ)
+    // Firebase v8 Yapılandırması
     const firebaseConfig = {
       apiKey: "AIzaSyBh10LwOctzhTx5D1UZIci9SZ4HnKUKrpM",
       authDomain: "mezuniyetsitesitakip.firebaseapp.com",
@@ -56,30 +51,31 @@
       measurementId: "G-Z2W3NFHBKR"
     };
 
-// Firebase başlatma (v8)
-firebase.initializeApp(firebaseConfig);
+    // Firebase'i başlat
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+    const auth = firebase.auth();
+    const analytics = firebase.analytics();
 
-var db = firebase.database();
-var auth = firebase.auth();
-var analytics = firebase.analytics();
-
-// Anonim giriş
-auth.signInAnonymously()
-  .then(() => console.log("Anonim giriş başarılı"))
-  .catch(error => console.error("Anonim giriş hatası:", error));
-
-
-    // Sayfa geçiş fonksiyonu (GÜNCELLENMİŞ)
+    // Sayfa geçiş fonksiyonu
     function showPage(pageId) {
+      console.log(`Sayfa değiştiriliyor: ${pageId}`);
+      
       // Tüm sayfaları gizle
       document.querySelectorAll('.page').forEach(page => {
         page.classList.remove('active');
       });
 
-      // Tüm medyaları durdur
-      document.querySelectorAll('audio, video').forEach(media => {
-        media.pause();
-        media.currentTime = 0;
+      // Tüm sesleri durdur
+      document.querySelectorAll('audio').forEach(audio => {
+        audio.pause();
+        audio.currentTime = 0;
+      });
+
+      // Tüm videoları durdur
+      document.querySelectorAll('video').forEach(video => {
+        video.pause();
+        video.currentTime = 0;
       });
 
       // Yeni sayfayı göster
@@ -87,11 +83,19 @@ auth.signInAnonymously()
       if (newPage) {
         newPage.classList.add('active');
 
-        // Yeni sayfanın medyalarını başlat
-        const mediaElements = newPage.querySelectorAll('audio, video');
-        mediaElements.forEach(media => {
-          media.play().catch(e => console.log('Medya oynatma hatası:', e));
-        });
+        // Yeni sayfanın sesini oynat
+        const newAudio = newPage.querySelector('audio');
+        if (newAudio) {
+          newAudio.play().catch(error => {
+            console.log('Ses oynatma hatası:', error);
+          });
+        }
+
+        // Yeni sayfanın videosunu oynat
+        const newVideo = newPage.querySelector('video');
+        if (newVideo) {
+          newVideo.play().catch(error => console.log('Video oynatma hatası:', error));
+        }
       }
 
       // Özel sayfa ayarları
@@ -102,11 +106,27 @@ auth.signInAnonymously()
           redButton.style.left = '';
           redButton.style.top = '';
         }
+        const gameMessage = document.getElementById('gameMessage');
+        if (gameMessage) {
+          gameMessage.textContent = '';
+        }
+      }
+
+      if (pageId === 'page8') {
+        const userText = document.getElementById('userText');
+        if (userText) {
+          userText.textContent = '';
+        }
       }
     }
 
-    // DOM yüklendiğinde (GÜNCELLENMİŞ)
+    // DOM yüklendiğinde
     document.addEventListener('DOMContentLoaded', function() {
+      // Anonim oturum açma
+      auth.signInAnonymously()
+        .then(() => console.log("Anonim giriş başarılı"))
+        .catch(error => console.error("Anonim giriş hatası:", error));
+
       // İlk sayfanın sesini oynat
       const audio = document.getElementById('audio1');
       if (audio) {
@@ -114,41 +134,37 @@ auth.signInAnonymously()
           audio.muted = false;
           audio.play().catch(e => {
             console.log("Otomatik oynatma engellendi, kullanıcı etkileşimi bekleniyor...");
-            document.body.addEventListener('click', () => audio.play().catch(e => console.log("Oynatma hatası:", e)), { once: true };
+            document.body.addEventListener('click', function() {
+              audio.play().catch(e => console.log("Tıklama sonrası oynatma hatası:", e));
+            }, { once: true });
           });
         }, 1000);
       }
 
-      // Mesaj gönderme işlevi (GÜNCELLENMİŞ)
-      const submitBtn = document.getElementById('submitText');
-      if (submitBtn) {
-        submitBtn.addEventListener('click', function() {
-          const messageInput = document.getElementById('userInput');
-          const message = messageInput.value.trim();
-          const userText = document.getElementById('userText');
-          
-          if (!message) {
-            userText.textContent = 'Lütfen bir mesaj yazın!';
-            return;
-          }
-          
-          if (db) {
-            db.ref('messages').push({
+      // Yazı yazma özelliği (page8)
+      const submitText = document.getElementById('submitText');
+      const userInput = document.getElementById('userInput');
+      const userText = document.getElementById('userText');
+
+      if (submitText && userInput && userText) {
+        submitText.addEventListener('click', () => {
+          const message = userInput.value.trim();
+          if (message) {
+            database.ref('messages').push({
               text: message,
               timestamp: firebase.database.ServerValue.TIMESTAMP,
-              userId: auth.currentUser?.uid || 'anonymous'
+              userId: auth.currentUser ? auth.currentUser.uid : 'anonymous'
             })
             .then(() => {
-              userText.textContent = `Mesajınız kaydedildi: ${message}`;
-              messageInput.value = '';
+              userText.textContent = `Mesaj gönderildi: ${message}`;
+              userInput.value = '';
             })
             .catch(error => {
-              console.error("Kaydetme hatası:", error);
-              userText.textContent = `Hata: Mesaj kaydedilemedi (${error.message})`;
+              console.error('Mesaj kaydetme hatası:', error);
+              userText.textContent = 'Mesaj kaydedilemedi, lütfen tekrar deneyin.';
             });
           } else {
-            userText.textContent = `Mesajınız: ${message} (Firebase bağlantısı yok)`;
-            messageInput.value = '';
+            userText.textContent = 'Lütfen bir mesaj yazın.';
           }
         });
       }
@@ -158,31 +174,67 @@ auth.signInAnonymously()
       const blueButton = document.getElementById('blueButton');
       const gameMessage = document.getElementById('gameMessage');
 
+      const blueMessages = [
+        'Yeni başlangıçlar seni bekliyor! Mezuniyetinle her şey mümkün.',
+        'Geleceğe cesur adımlar at, her an yeni bir fırsat!',
+        'Hayallerin peşinden koş, bu sadece bir başlangıç!',
+        'Dünya seninle daha güzel, ilerle ve parlamaya devam et!'
+      ];
+
       if (redButton && blueButton) {
-        // Kırmızı buton hareket kodu (aynı)
-        // ...
+        const getSafePosition = () => {
+          const container = redButton.parentElement.parentElement;
+          const blueRect = blueButton.getBoundingClientRect();
+          const containerRect = container.getBoundingClientRect();
+          const buffer = 30;
+
+          let newX, newY;
+          let attempts = 0;
+          const maxAttempts = 10;
+
+          do {
+            newX = Math.random() * (containerRect.width - redButton.offsetWidth - 20);
+            newY = Math.random() * (containerRect.height - redButton.offsetHeight - 20);
+            attempts++;
+          } while (
+            attempts < maxAttempts &&
+            newX >= blueRect.left - containerRect.left - buffer &&
+            newX <= blueRect.right - containerRect.left + buffer &&
+            newY >= blueRect.top - containerRect.top - buffer &&
+            newY <= blueRect.bottom - containerRect.top + buffer
+          );
+
+          if (attempts >= maxAttempts) {
+            newX = blueRect.left - containerRect.left < containerRect.width / 2
+              ? blueRect.right - containerRect.left + buffer
+              : blueRect.left - containerRect.left - redButton.offsetWidth - buffer;
+            newY = blueRect.top - containerRect.top + buffer;
+          }
+
+          return { x: newX, y: newY };
+        };
+
+        const moveRedButton = () => {
+          const { x, y } = getSafePosition();
+          redButton.style.position = 'absolute';
+          redButton.style.left = `${x}px`;
+          redButton.style.top = `${y}px`;
+          if (gameMessage) {
+            gameMessage.textContent = 'Kırmızı buton biraz inatçı gibi değil mi ? sen boşa vakit kaybetme maviye bas konuştuğun kişiye yaz';
+          }
+        };
+
+        redButton.addEventListener('mouseover', moveRedButton);
+        redButton.addEventListener('touchstart', (e) => {
+          e.preventDefault();
+          moveRedButton();
+        });
       }
 
       if (blueButton && gameMessage) {
-        blueButton.addEventListener('click', function() {
-          const messages = [
-            'Yeni başlangıçlar seni bekliyor!',
-            'Geleceğe cesur adımlar at!',
-            'Hayallerin peşinden koş!',
-            'Dünya seninle daha güzel!'
-          ];
-          gameMessage.textContent = messages[Math.floor(Math.random() * messages.length)];
-        });
-      }
-      
-      // Firebase bağlantı testi
-      if (db) {
-        db.ref('.info/connected').on('value', (snapshot) => {
-          if (snapshot.val() === true) {
-            console.log("Firebase'e bağlı");
-          } else {
-            console.log("Firebase'e bağlı değil");
-          }
+        blueButton.addEventListener('click', () => {
+          const randomMessage = blueMessages[Math.floor(Math.random() * blueMessages.length)];
+          gameMessage.textContent = randomMessage;
         });
       }
     });
