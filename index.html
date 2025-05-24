@@ -326,6 +326,15 @@
       auth = firebase.auth ? firebase.auth() : null;
       analytics = firebase.analytics ? firebase.analytics() : null;
     }
+    // Firebase bağlantısını test etmek için
+firebase.database().ref('test').set({
+  message: 'Firebase bağlantı testi',
+  timestamp: new Date().toISOString()
+}).then(() => {
+  console.log('Firebase bağlantısı başarılı! Veri yazıldı.');
+}).catch(error => {
+  console.error('Firebase hatası:', error);
+});
 
     // Sayfa geçiş fonksiyonu
     function showPage(pageId) {
